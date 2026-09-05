@@ -88,7 +88,7 @@ export function renderApprovalDecisionSheetHtml(
   <section class="gl-decision-sheet gl-card gl-card--elevated" aria-labelledby="gl-decision-title" style="max-width: 640px; margin: var(--space-6) auto 0;">
     <div class="gl-approval-sheet__head">
       <div style="min-width: 0;">
-        <div class="kicker">${item.referenceNumber || "คำขออนุมัติ"}</div>
+        <div class="kicker">${escapeHtml(item.referenceNumber || "คำขออนุมัติ")}</div>
         <h2 id="gl-decision-title" style="font-size: var(--text-xl); font-weight: var(--weight-bold); margin: var(--space-1) 0 0;">
           ${escapeHtml(item.description)}
         </h2>
@@ -107,7 +107,7 @@ export function renderApprovalDecisionSheetHtml(
         ${formattedAmount}
       </div>
       <div class="gl-approval-amount__meta">
-        ${item.creatorName || "ไม่ระบุผู้ขอ"} · ${item.accountName}
+        ${escapeHtml(item.creatorName || "ไม่ระบุผู้ขอ")} · ${escapeHtml(item.accountName ?? "")}
       </div>
     </div>
 

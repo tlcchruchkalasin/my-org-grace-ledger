@@ -1,3 +1,11 @@
+> **Note — planning document, not the current architecture.**
+> This document is an early planning and audit report. It records a proposed
+> stack (React 19, TanStack Router, Tailwind CSS) that the project did not
+> adopt. The actual implementation is Vanilla TypeScript + Vite, with no
+> React, no router framework, and no Tailwind. For the current architecture,
+> read `README.md` and `CONTEXT.md` at the repository root. Keep the content
+> below for historical reference only.
+
 # Grace Ledger — Production Financial OS: Comprehensive Audit Report
 
 **Document Status:** Complete Audit & Production Blueprint  

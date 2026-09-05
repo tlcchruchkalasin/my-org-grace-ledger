@@ -1,5 +1,6 @@
 import { ActionProposalUiCard } from "../../lib/ai/grace-ai-proposals";
 import { UserRole } from "../../lib/rbac";
+import { escapeHtml } from "../../lib/format";
 
 export interface ProposalConfirmationModalProps {
   proposal: ActionProposalUiCard | null;
@@ -95,10 +96,10 @@ export function renderProposalConfirmationModalHtml(props: ProposalConfirmationM
         </div>
 
         <h3 style="font-size: var(--text-sm); font-weight: var(--weight-bold); margin: var(--space-1) 0; color: var(--foreground);">
-          ${proposal.title}
+          ${escapeHtml(proposal.title)}
         </h3>
         <p style="font-size: var(--text-xs); color: var(--muted-foreground); margin-bottom: var(--space-3);">
-          ${proposal.summary}
+          ${escapeHtml(proposal.summary)}
         </p>
 
         <!-- Financial Effect -->
@@ -107,7 +108,7 @@ export function renderProposalConfirmationModalHtml(props: ProposalConfirmationM
             ${ICON_ALERT} <span>ผลกระทบทางการเงิน:</span>
           </div>
           <div style="padding-left: var(--space-4); line-height: 1.5;">
-            ${proposal.financial_effect}
+            ${escapeHtml(proposal.financial_effect)}
           </div>
         </div>
 
@@ -119,14 +120,14 @@ export function renderProposalConfirmationModalHtml(props: ProposalConfirmationM
           <div style="font-weight: var(--weight-medium); margin-bottom: var(--space-2);">การเปลี่ยนแปลงยอดกองทุน:</div>
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2);">
             <div style="background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: var(--space-2);">
-              <div style="color: var(--muted-foreground);">ต้นทาง (${proposal.source}):</div>
+              <div style="color: var(--muted-foreground);">ต้นทาง (${escapeHtml(proposal.source ?? "")}):</div>
               <div class="num-display" style="color: var(--foreground);">ก่อน: ${proposal.current_state.from_fund_balance}</div>
               <div class="num-display" style="color: var(--destructive); font-weight: var(--weight-bold); display: flex; align-items: center; gap: 2px;">
                 ${ICON_ARROW} หลัง: ${proposal.current_state.projected_from_balance}
               </div>
             </div>
             <div style="background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: var(--space-2);">
-              <div style="color: var(--muted-foreground);">ปลายทาง (${proposal.destination}):</div>
+              <div style="color: var(--muted-foreground);">ปลายทาง (${escapeHtml(proposal.destination ?? "")}):</div>
               <div class="num-display" style="color: var(--foreground);">ก่อน: ${proposal.current_state.to_fund_balance}</div>
               <div class="num-display" style="color: var(--success); font-weight: var(--weight-bold); display: flex; align-items: center; gap: 2px;">
                 ${ICON_ARROW} หลัง: ${proposal.current_state.projected_to_balance}
@@ -156,7 +157,7 @@ export function renderProposalConfirmationModalHtml(props: ProposalConfirmationM
 
         ${
           proposal.reason
-            ? `<div style="font-size: var(--text-xs); color: var(--muted-foreground);"><strong style="color: var(--foreground);">เหตุผลประกอบ:</strong> ${proposal.reason}</div>`
+            ? `<div style="font-size: var(--text-xs); color: var(--muted-foreground);"><strong style="color: var(--foreground);">เหตุผลประกอบ:</strong> ${escapeHtml(proposal.reason)}</div>`
             : ""
         }
       </div>
@@ -166,7 +167,7 @@ export function renderProposalConfirmationModalHtml(props: ProposalConfirmationM
         error
           ? `
       <div class="gl-error-banner" style="background: rgba(239, 68, 68, 0.1); border: 1px solid var(--destructive); border-radius: var(--radius-md); padding: var(--space-3); font-size: var(--text-xs); color: var(--destructive); margin-bottom: var(--space-4);" role="alert">
-        <strong>เกิดข้อผิดพลาดในการดำเนินการ:</strong> ${error}
+        <strong>เกิดข้อผิดพลาดในการดำเนินการ:</strong> ${escapeHtml(error)}
       </div>
       `
           : ""
