@@ -61,11 +61,12 @@ export interface ConsumedConfirmationData {
  * Generates a cryptographically strong 32-character security nonce
  */
 export function generateConfirmationNonce(): string {
-  if (typeof crypto !== "undefined" && crypto.randomUUID) {
-    return "conf_nonce_" + crypto.randomUUID().replace(/-/g, "");
+  const cryptoApi = globalThis.crypto;
+  if (!cryptoApi?.randomUUID) {
+    throw new Error("Cryptographically secure randomness is unavailable");
   }
-  // Fallback for non-browser/node environments
-  return "conf_nonce_" + Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+
+  return "conf_nonce_" + cryptoApi.randomUUID().replace(/-/g, "");
 }
 
 /**

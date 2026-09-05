@@ -44,8 +44,15 @@ export class TelegramIdentityService {
       return { success: false, message: "รหัส Telegram User ID ไม่ถูกต้อง" };
     }
 
-    const otp = Math.floor(100000 + Math.random() * 900000).toString();
-    const token = `tok_${Date.now()}_${Math.random().toString(36).substring(2, 10)}`;
+    const cryptoApi = globalThis.crypto;
+    if (!cryptoApi?.randomUUID || !cryptoApi.getRandomValues) {
+      return { success: false, message: "ระบบไม่พร้อมสร้างรหัสยืนยันที่ปลอดภัย" };
+    }
+
+    const otpBytes = new Uint32Array(1);
+    cryptoApi.getRandomValues(otpBytes);
+    const otp = (100000 + (otpBytes[0] % 900000)).toString();
+    const token = `tok_${cryptoApi.randomUUID().replace(/-/g, "")}`;
     const expiresAt = new Date(Date.now() + 300000).toISOString(); // 5 minutes TTL
 
     const payload: LinkTokenPayload = {
